@@ -13,11 +13,30 @@ def get_past_window_feature(r, raw_data, lag_days, genre_type):
     end_date = r['date']
 
     if genre_type=='total':
-        df_fea = raw_data.loc[(raw_data['userId'] == r['userId']) & (raw_data['date']<end_date) & (raw_data['date']>=begin_date)]
+        df_fea = raw_data.loc[(raw_data['userId'] == r['userId']) & (raw_data['date'] < end_date) &
+                              (raw_data['date'] >= begin_date)]
     else:
         df_fea = raw_data.loc[(raw_data['userId'] == r['userId']) & (raw_data['date'] < end_date) &
-                              (raw_data['date'] >= begin_date) & (raw_data[r['genres_list']].sum(axis=1)>0)]
+                              (raw_data['date'] >= begin_date) & (raw_data[r['genres_list']].sum(axis=1) > 0)]
     if len(df_fea) ==0:
         return []
     else:
         return df_fea['rating'].tolist()
+
+def get_past_movie_rating(r, raw_data, lag_days):
+    """
+    获得特定电影过去一段时间的评分均值
+    :param r:
+    :param raw_data:
+    :param lag_days:
+    :return:
+    """
+    begin_date = r['date'] - datetime.timedelta(lag_days)
+    end_date = r['date']
+
+    df_fea = raw_data.loc[(raw_data['movieId'] == r['movieId']) & (raw_data['date'] < end_date) &
+                          (raw_data['date'] >= begin_date)]
+    if len(df_fea) == 0:
+        return None
+    else:
+        return df_fea['rating'].mean()
