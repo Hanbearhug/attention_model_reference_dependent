@@ -58,12 +58,12 @@ def get_agg_feature(r, feature_type, k=None):
         if len(r_list) <= k:
             return np.mean(r_list)
         else:
-            np.mean(np.sort(r_list)[-k:])
+            return np.mean(np.sort(r_list)[-k:])
     elif feature_type == 'end_k_avg':
         if len(r_list) <= k:
             return np.mean(r_list)
         else:
-            np.mean(r_list[:k])
+            return np.mean(r_list[:k])
     else:
         raise ValueError("不存在的特征类型")
 
