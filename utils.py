@@ -2,6 +2,12 @@ import datetime
 import numpy as np
 import tensorflow as tf
 from tqdm import notebook
+"""
+日期:20200809
+作者：韩方园
+备注：weight权重明显是peak较大，但却出现了end权重较小，而first权重较大的现象，与逻辑不符，需要进一步观察
+"""
+
 
 def get_past_window_feature(r, raw_data, lag_days, genre_type):
     """
